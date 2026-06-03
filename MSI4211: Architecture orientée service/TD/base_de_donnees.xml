@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Table Client -->
+    <xs:element name="Client">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Client" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Nom" type="xs:string"/>
+                            <xs:element name="Prenom" type="xs:string"/>
+                            <xs:element name="Age" type="xs:int"/>
+                            <xs:element name="Adresse" type="xs:string"/>
+                        </xs:sequence>
+                        <xs:attribute name="NumCl" type="xs:int" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        <!-- Cle primaire -->
+        <xs:key name="pk_Cl">
+            <xs:selector xpath="Client"/>
+            <xs:field xpath="@NumCl"/>
+        </xs:key>
+    </xs:element>
+
+    <!-- Table Commande -->
+    <xs:element name="Commande">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Commande" maxOcccurs="unbounded">
+                    <xs:complexType>
+                        <xs:element name="DateCo" type="xs:string"/>
+                    </xs:complexeType>
+                </xs:element>
+                <xs:attribute name="NumCo" type="xs:int" use="required"/>
+                <xs:attribute name="NumCl" type="xs:int" use="required"/>
+            <xs:sequence>
+        </xs:complexType>
+        <!-- Cle primaire -->
+        <xs:key name="pk_Co">
+            <xs:selector xpath="Commande"/>
+            <xs:field xpath="@NumCo"/>
+        </xs:key>
+        <!-- Cle etrangere -->
+        <xs:keyref name="fk_Cl" refer="pk_Cl">
+            <xs:selector xpath="Commande"/>
+            <xs:field xpath="@NumCl">/
+        </xs:keyref>
+    </xs:element>
+
+    <!-- Table Produit -->
+    <xs:element name="Produit">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Produit" maxOccurs="unbounced">
+                    <xs:element name="libelle" type="xs:string"/>
+                    <xs:element name="prix" type="xs:double"/>
+                    <xs:element name="provenance" type="xs:string"/>
+                </xs:element>
+                <xs:attribute name="idProd" type="xs:int" use="required"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:key name="pk_prod">
+            <xs:selector xpath="Produit"/>
+            <xs:field xpath="@idProd"/>
+        </xs:key>
+    </xs:element>   
+
+    <!-- Table Ligne de Commande -->
+    <xs:element name="LigneCommande">
+        
+    </xs:element>

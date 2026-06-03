@@ -1,0 +1,70 @@
+adam@adaam:~/Bureau$ docker start oracle19c
+oracle19c
+adam@adaam:~/Bureau$ docker ps
+CONTAINER ID   IMAGE                                                        COMMAND                  CREATED        STATUS                        PORTS                                                                                          NAMES
+998edf561db2   container-registry.oracle.com/database/enterprise:19.3.0.0   "/bin/bash -c 'exec …"   12 days ago    Up About a minute (healthy)   0.0.0.0:1521->1521/tcp, [::]:1521->1521/tcp                                                    oracle19c
+f34ba8470572   jenkins-with-docker                                          "/usr/bin/tini -- /u…"   3 months ago   Up 3 minutes                  0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 0.0.0.0:50000->50000/tcp, [::]:50000->50000/tcp   jenkins
+adam@adaam:~/Bureau$ docker exec -it oracle19c bash
+bash-4.2$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Wed Jun 3 09:49:29 2026
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> SELECT name, open_mode FROM v$database;
+
+NAME	  OPEN_MODE
+--------- --------------------
+ORCLCDB   READ WRITE
+
+SQL> SHOW CON_NAME;
+
+CON_NAME
+------------------------------
+CDB$ROOT
+SQL> SHOW PDBS;
+
+    CON_ID CON_NAME			  OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+	 2 PDB$SEED			  READ ONLY  NO
+	 3 ORCLPDB1			  READ WRITE NO
+SQL> SHOW USER;
+USER is "SYS"
+SQL> ALTER SESSION SET CONTAINER=ORCLPDB1;
+
+Session altered.
+
+SQL> SHOW CON_NAME;
+
+CON_NAME
+------------------------------
+ORCLPDB1
+SQL> CREATE USER adam IDENTIFIED BY Passer123;  
+
+User created.
+
+SQL> SELECT username FROM dba_users WHERE username='ADAM';
+
+USERNAME
+--------------------------------------------------------------------------------
+ADAM
+
+SQL> GRANT CONNECT TO adam;
+
+Grant succeeded.
+
+SQL> ALTER USER adam QUOTA UNLIMITED ON USERS;
+
+User altered.
+
+SQL> CONNECT adam/Passer123@ORCLPDB1
+Connected.
+SQL> SHOW USER;
+USER is "ADAM"
+SQL>

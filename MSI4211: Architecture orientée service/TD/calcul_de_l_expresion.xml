@@ -1,0 +1,42 @@
+<!DOCTYPE textemath SYSTEM "Note.dtd">
+<textmath>
+    <text> Calculer la valeur de l'expression x puissance 4 + racine de 5 le tout sur 7 multiplier par racine de 3 lorsque x = 4 </text>
+    <formule>
+        <fraction>
+            <op1>
+                <formule>
+                    <somme>
+                        <op1>
+                            <formule>
+                                <puissance exposant = "4">
+                                    <op1><valeur>x</valeur></op1>
+                                </puissance>
+                            </formule>
+                        </op1>
+                        <op2>
+                            <formule>
+                                <racine ordre = "3">
+                                    <op1><valeur>5</valeur></op1>
+                                </racine>
+                            </formule>
+                        </op2>
+                    <somme>
+                </formule>
+            </op1>
+            <op2>
+                <formule>
+                    <produit>
+                        <op1><valeur>7</valeur></op1>
+                        <op2>
+                            <formule>
+                                <racine>
+                                    <op1><valeur>3</valeur></op1>
+                                </racine>
+                            </formule>
+                        </op2>
+                    </produit>
+                </formule>
+            </op2>
+        </fraction>
+    </formule>
+</textmath>

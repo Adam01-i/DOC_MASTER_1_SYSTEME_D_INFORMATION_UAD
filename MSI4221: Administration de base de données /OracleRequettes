@@ -68,3 +68,34 @@ Connected.
 SQL> SHOW USER;
 USER is "ADAM"
 SQL>
+SQL> CONN SYS AS SYSDBA
+Enter password: 
+Connected.
+SQL> 
+SQL> SHOW USER;    
+USER is "SYS"
+SQL> SHOW CON_NAME;
+
+CON_NAME
+------------------------------
+CDB$ROOT
+SQL> ALTER SESSION SET CONTAINER = ORCLPDB1;
+
+Session altered.
+
+SQL> SHOW CON_NAME;                         
+
+CON_NAME
+------------------------------
+ORCLPDB1
+SQL> CREATE USER ADMIN_USER IDENTIFIED BY ADMIN;
+
+User created.
+
+SQL> GRANT DBA TO ADMIN_USER;
+
+Grant succeeded.
+
+SQL> 
+
+

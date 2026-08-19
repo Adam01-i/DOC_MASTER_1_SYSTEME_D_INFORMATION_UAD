@@ -1,0 +1,294 @@
+[
+    {
+        "id": "b85658eb02c9c415",
+        "type": "tab",
+        "label": "Flux 6",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a82ddc1b8f243879",
+        "type": "serial in",
+        "z": "b85658eb02c9c415",
+        "name": "SERIAL IN",
+        "serial": "51a47208d7a4de22",
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "4c03116f733f81c2",
+                "b74f5ad670e8bdbb"
+            ]
+        ]
+    },
+    {
+        "id": "b74f5ad670e8bdbb",
+        "type": "debug",
+        "z": "b85658eb02c9c415",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "4c03116f733f81c2",
+        "type": "function",
+        "z": "b85658eb02c9c415",
+        "name": "01 - Parser SALLE",
+        "func": "let data = msg.payload.toString().trim();\n\n\n// Ignorer les messages système\nif(\n    data.includes(\"Station\") ||\n    data.includes(\"=\") ||\n    data==\"ERREUR_DHT\"\n){\n    return null;\n}\n\n\n// Découpage\nlet tab = data.split(\";\");\n\n\nif(tab.length !== 4)\n{\n    return null;\n}\n\n\nmsg.station = tab[0].trim();\n\nmsg.temperature = Number(tab[1]);\n\nmsg.humidite = Number(tab[2]);\n\nmsg.distance = Number(tab[3]);\n\n\n// debug\nnode.warn(\"STATION = \"+msg.station);\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "d42b21175581f758"
+            ]
+        ]
+    },
+    {
+        "id": "d42b21175581f758",
+        "type": "function",
+        "z": "b85658eb02c9c415",
+        "name": "02 - Fonction règles métier",
+        "func": "let presence = false;\n\nlet etat=\"VEILLE\";\n\n\nif(msg.distance < 40)\n{\n\n    presence=true;\n\n\n    if(\n        msg.temperature <=30 &&\n        msg.humidite <=75\n    )\n    {\n        etat=\"AUTORISE\";\n    }\n\n    else\n    {\n        etat=\"REFUSE\";\n    }\n\n}\n\nelse\n{\n\n    if(msg.temperature >28)\n    {\n        etat=\"PREALERTE\";\n    }\n\n    else\n    {\n        etat=\"VEILLE\";\n    }\n\n}\n\n\nmsg.presence = presence;\n\nmsg.etat = etat;\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 280,
+        "wires": [
+            [
+                "185669c04db7f5a1",
+                "17e4a9f2703fa039",
+                "db4e18224ff84375"
+            ]
+        ]
+    },
+    {
+        "id": "185669c04db7f5a1",
+        "type": "function",
+        "z": "b85658eb02c9c415",
+        "name": "05 - Function LED",
+        "func": "msg.payload = msg.etat + \"\\n\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 540,
+        "wires": [
+            [
+                "c5cbf6c028899a2d",
+                "ac11080d36c36a61"
+            ]
+        ]
+    },
+    {
+        "id": "c5cbf6c028899a2d",
+        "type": "serial out",
+        "z": "b85658eb02c9c415",
+        "name": "SERIAL OUT",
+        "serial": "aea8762b5e0a4be9",
+        "x": 470,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "17e4a9f2703fa039",
+        "type": "function",
+        "z": "b85658eb02c9c415",
+        "name": "04 - Function SQL INSERT",
+        "func": "msg.topic = `\n\nINSERT INTO mesures\n(\nstation_id,\ntemperature,\nhumidite,\ndistance,\npresence,\netat\n)\n\nVALUES\n\n(\n(\nSELECT id \nFROM stations \nWHERE nom_station='${msg.station}'\n),\n\n${msg.temperature},\n\n${msg.humidite},\n\n${msg.distance},\n\n${msg.presence ? 1 : 0},\n\n'${msg.etat}'\n\n)\n\n`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 500,
+        "wires": [
+            [
+                "f6259bfeb749766b",
+                "02974b554396d2e7"
+            ]
+        ]
+    },
+    {
+        "id": "f6259bfeb749766b",
+        "type": "mysql",
+        "z": "b85658eb02c9c415",
+        "mydb": "64680f7311d1a648",
+        "name": "MYSQL",
+        "x": 1100,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac11080d36c36a61",
+        "type": "debug",
+        "z": "b85658eb02c9c415",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "02974b554396d2e7",
+        "type": "function",
+        "z": "b85658eb02c9c415",
+        "name": "fonction avant MySQL",
+        "func": "let compteur = flow.get(\"compteur\") || 0;\n\ncompteur++;\n\nflow.set(\"compteur\", compteur);\n\n\nnode.warn(\"INSERT NUMERO : \" + compteur);\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 640,
+        "wires": [
+            [
+                "c10da592f4398790"
+            ]
+        ]
+    },
+    {
+        "id": "c10da592f4398790",
+        "type": "debug",
+        "z": "b85658eb02c9c415",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "db4e18224ff84375",
+        "type": "function",
+        "z": "b85658eb02c9c415",
+        "name": "function 2",
+        "func": "node.warn(\"STATION = \" + msg.station);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 300,
+        "wires": [
+            [
+                "16e663c12c5dcb93"
+            ]
+        ]
+    },
+    {
+        "id": "16e663c12c5dcb93",
+        "type": "debug",
+        "z": "b85658eb02c9c415",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "51a47208d7a4de22",
+        "type": "serial-port",
+        "name": "SERIAL IN",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "aea8762b5e0a4be9",
+        "type": "serial-port",
+        "name": "SERIAL OUT",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "64680f7311d1a648",
+        "type": "MySQLdatabase",
+        "name": "BASE DE DONNEES",
+        "host": "localhost",
+        "port": "3306",
+        "db": "iot_supervision",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "1a78ac549fca2061",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-serialport": "2.0.3",
+            "node-red-node-mysql": "3.0.0"
+        }
+    }
+]

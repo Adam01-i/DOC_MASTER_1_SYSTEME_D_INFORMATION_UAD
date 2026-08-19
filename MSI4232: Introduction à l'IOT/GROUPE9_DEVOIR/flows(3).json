@@ -1,0 +1,846 @@
+[
+    {
+        "id": "d129328b6d51e3a2",
+        "type": "ui_switch",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "label": "LAMP3",
+        "tooltip": "",
+        "group": "bb38dd7c242b5bed",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "b4024a4ecd91eba8"
+            ]
+        ]
+    },
+    {
+        "id": "a76be2d5afcd1697",
+        "type": "ui_switch",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "label": "LAMP2",
+        "tooltip": "",
+        "group": "bb38dd7c242b5bed",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 580,
+        "y": 160,
+        "wires": [
+            [
+                "86e35b53171f94e5"
+            ]
+        ]
+    },
+    {
+        "id": "a764f581a774b901",
+        "type": "ui_switch",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "label": "LAMP1",
+        "tooltip": "",
+        "group": "bb38dd7c242b5bed",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 580,
+        "y": 40,
+        "wires": [
+            [
+                "86c121233423199f"
+            ]
+        ]
+    },
+    {
+        "id": "703dd12f684deb6b",
+        "type": "debug",
+        "z": "e200bbfa8ca3b217",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "84e785551c837359",
+        "type": "ui_text_input",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "label": "Text input",
+        "tooltip": "",
+        "group": "bb38dd7c242b5bed",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 240,
+        "y": 160,
+        "wires": [
+            [
+                "a764f581a774b901",
+                "a76be2d5afcd1697",
+                "d129328b6d51e3a2"
+            ]
+        ]
+    },
+    {
+        "id": "3c5ba0d30340f92b",
+        "type": "inject",
+        "z": "e200bbfa8ca3b217",
+        "name": "Timestamps",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "edce5f7d070f6e99"
+            ]
+        ]
+    },
+    {
+        "id": "6c3c92efc84d52ff",
+        "type": "debug",
+        "z": "e200bbfa8ca3b217",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "edce5f7d070f6e99",
+        "type": "http request",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://adam.alwaysdata.net/api/lampes.php?action=list",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 380,
+        "wires": [
+            [
+                "1eac99729bb605f7"
+            ]
+        ]
+    },
+    {
+        "id": "7e25af79f0e613ef",
+        "type": "serial out",
+        "z": "e200bbfa8ca3b217",
+        "name": "Serial OUT",
+        "serial": "9c357b9b687e9a16",
+        "x": 1190,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c0a6665ae3cce73b",
+        "type": "serial in",
+        "z": "e200bbfa8ca3b217",
+        "name": "SERIAL IN",
+        "serial": "e44297a87566f911",
+        "x": 80,
+        "y": 580,
+        "wires": [
+            [
+                "d805a9faa6d802cc"
+            ]
+        ]
+    },
+    {
+        "id": "91be5b6527bb11c8",
+        "type": "ui_gauge",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "group": "bb38dd7c242b5bed",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "15",
+        "max": "45",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "25",
+        "seg2": "35",
+        "diff": false,
+        "className": "",
+        "x": 1150,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "f67673b8c4520de4",
+        "type": "ui_chart",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "group": "bb38dd7c242b5bed",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "chart TEMPERATURE",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "15",
+        "ymax": "45",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1200,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d805a9faa6d802cc",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Funct : Traitement température",
+        "func": "let ligne = msg.payload.trim();\n\nif (!ligne.startsWith(\"TEMP:\")) {\n    return null;\n}\n\nlet temp = parseFloat(ligne.replace(\"TEMP:\", \"\"));\n\nmsg.method = \"POST\";\nmsg.url = \"http://adam.alwaysdata.net/api/temperature.php?action=ajouter\";\n\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\n// PAS de JSON.stringify\nmsg.payload = {\n    valeur: temp\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 580,
+        "wires": [
+            [
+                "74b488202e7d9212"
+            ]
+        ]
+    },
+    {
+        "id": "74b488202e7d9212",
+        "type": "http request",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 850,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa3f4cf5ef4cd5ee",
+        "type": "debug",
+        "z": "e200bbfa8ca3b217",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "1f9dd3390723993d",
+        "type": "inject",
+        "z": "e200bbfa8ca3b217",
+        "name": "Timestamps",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 740,
+        "wires": [
+            [
+                "3c5d26d1e982f40c"
+            ]
+        ]
+    },
+    {
+        "id": "3c5d26d1e982f40c",
+        "type": "http request",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://adam.alwaysdata.net/api/temperature.php?action=current",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 490,
+        "y": 740,
+        "wires": [
+            [
+                "a340d59ac21c0eb7"
+            ]
+        ]
+    },
+    {
+        "id": "1ef118a929e528af",
+        "type": "debug",
+        "z": "e200bbfa8ca3b217",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "a340d59ac21c0eb7",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Function Convertir Température",
+        "func": "if (!msg.payload.success) {\n    return null;\n}\n\nmsg.payload = parseFloat(msg.payload.derniere.valeur);\n\nif (isNaN(msg.payload)) {\n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 740,
+        "wires": [
+            [
+                "91be5b6527bb11c8",
+                "f67673b8c4520de4"
+            ]
+        ]
+    },
+    {
+        "id": "86c121233423199f",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Function L1",
+        "func": "msg.method = \"POST\";\n\nmsg.url = \"http://adam.alwaysdata.net/api/lampes.php?action=toggle\";\n\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = JSON.stringify({\n    id: 1,\n    etat: Number(msg.payload)\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 40,
+        "wires": [
+            [
+                "b889c2d8c0e6f062"
+            ]
+        ]
+    },
+    {
+        "id": "86e35b53171f94e5",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Function L2",
+        "func": "msg.method = \"POST\";\n\nmsg.url = \"http://adam.alwaysdata.net/api/lampes.php?action=toggle\";\n\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = JSON.stringify({\n    id: 2,\n    etat: Number(msg.payload)\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 160,
+        "wires": [
+            [
+                "b889c2d8c0e6f062"
+            ]
+        ]
+    },
+    {
+        "id": "b4024a4ecd91eba8",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Function L3",
+        "func": "msg.method = \"POST\";\n\nmsg.url = \"http://adam.alwaysdata.net/api/lampes.php?action=toggle\";\n\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = JSON.stringify({\n    id: 3,\n    etat: Number(msg.payload)\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 280,
+        "wires": [
+            [
+                "b889c2d8c0e6f062"
+            ]
+        ]
+    },
+    {
+        "id": "b889c2d8c0e6f062",
+        "type": "http request",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1030,
+        "y": 160,
+        "wires": [
+            [
+                "703dd12f684deb6b"
+            ]
+        ]
+    },
+    {
+        "id": "1eac99729bb605f7",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Function Serial",
+        "func": "if (!msg.payload.success) {\n    return null;\n}\n\nlet l = msg.payload.data;\n\nlet trame = \"\";\n\nfor (let i = 0; i < l.length; i++) {\n    trame += (Number(l[i].etat) === 1) ? \"11\" : \"10\";\n}\n\nmsg.payload = trame + \"\\n\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 380,
+        "wires": [
+            [
+                "7e25af79f0e613ef"
+            ]
+        ]
+    },
+    {
+        "id": "156abbc28e7a9288",
+        "type": "serial in",
+        "z": "e200bbfa8ca3b217",
+        "name": "SERIAL IN",
+        "serial": "e44297a87566f911",
+        "x": 80,
+        "y": 860,
+        "wires": [
+            [
+                "9fa39d3fbe5455aa"
+            ]
+        ]
+    },
+    {
+        "id": "9fa39d3fbe5455aa",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Function Distance",
+        "func": "msg = {\n    method: \"POST\",\n    url: \"http://adam.alwaysdata.net/api/distance.php?action=ajouter\",\n    headers: {\n        \"Content-Type\": \"application/json\"\n    },\n    payload: JSON.stringify({\n        distance: msg.payload\n    })\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 860,
+        "wires": [
+            [
+                "225eec108f6d1003"
+            ]
+        ]
+    },
+    {
+        "id": "abb7ef04ef783b4c",
+        "type": "debug",
+        "z": "e200bbfa8ca3b217",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "a5c02644ebbee77e",
+        "type": "inject",
+        "z": "e200bbfa8ca3b217",
+        "name": "Timestamps",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 940,
+        "wires": [
+            [
+                "0d59c8deb69aded1"
+            ]
+        ]
+    },
+    {
+        "id": "0d59c8deb69aded1",
+        "type": "http request",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://adam.alwaysdata.net/api/distance.php?action=current",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 410,
+        "y": 940,
+        "wires": [
+            [
+                "64101fa93b347bd4"
+            ]
+        ]
+    },
+    {
+        "id": "64101fa93b347bd4",
+        "type": "function",
+        "z": "e200bbfa8ca3b217",
+        "name": "Function Dashboard Distance",
+        "func": "if (!msg.payload.success) {\n    return null;\n}\n\nmsg.payload = parseFloat(msg.payload.derniere.distance_cm);\n\nif (isNaN(msg.payload)) {\n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 940,
+        "wires": [
+            [
+                "31b38dec7c6266e0"
+            ]
+        ]
+    },
+    {
+        "id": "31b38dec7c6266e0",
+        "type": "ui_chart",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "group": "bb38dd7c242b5bed",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "label": "chart DISTANCE",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1130,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f4569ad903858303",
+        "type": "debug",
+        "z": "e200bbfa8ca3b217",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "225eec108f6d1003",
+        "type": "http request",
+        "z": "e200bbfa8ca3b217",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 770,
+        "y": 860,
+        "wires": [
+            [
+                "f4569ad903858303"
+            ]
+        ]
+    },
+    {
+        "id": "bb38dd7c242b5bed",
+        "type": "ui_group",
+        "name": "IOT_SMART_HOME",
+        "tab": "a3752b583ae7ad73",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9c357b9b687e9a16",
+        "type": "serial-port",
+        "name": "SERIAL OUT",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "e44297a87566f911",
+        "type": "serial-port",
+        "name": "SERIAL IN",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "a3752b583ae7ad73",
+        "type": "ui_tab",
+        "name": "IOT_SMART_HOME",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "cccfa08ac733c58f",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-serialport": "2.0.3"
+        }
+    }
+]
